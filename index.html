@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Holiday Card</title>
+    <meta name="description" content="building rotation">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+ <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+<script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+<script>
+AFRAME.registerComponent('alpha-test', {
+  dependencies: ['material'],
+
+  init: function () {
+    var material = this.el.getObject3D('mesh').material;
+    material.alphaTest = 0.5;
+    material.needsUpdate = true;
+  }
+});
+
+</script>
+
+<style>
+.top-layer {
+  position: absolute;
+  z-index: 1;
+}
+</style>
+
+  </head>
+  <body>
+<div class="top-layer">
+Some text that sits on the top layer. 
+</div>
+<a-scene>
+<a-entity id="snow" position="0 4.25 0" particle-system="preset: snow; particleCount: 10000"></a-entity>
+<a-entity light="type: ambient; intensity: 0.5;" id="ambientlight"></a-entity>
+<a-entity light="groundColor:#ff80c0;penumbra:0.72;type:spot;intensity:0.4;castShadow:true" id="spotlight" position="0 4.22 16.36" rotation="-24.69 0.40 -35.69"></a-entity>
+
+ <a-camera id="camera" look-controls wasd-controls="fly: true" position="0 1.6 22" rotation="0 0 0">
+	<a-cursor color="#FF0000"></a-cursor>
+</a-camera>
+
+<a-image id="logo" src="img/happyholidays.png" position="-2 12.5 0" height=".5" width="2" scale="10 10 10" rotation="0 0 0" material="transparent: true; opacity: 0.9" fog="false" alpha-test>
+</a-image>
+
+<a-image id="logo" src="img/cablecenter_logo.png" position="-2 9.5 0" height=".3" width="1.7" scale="10 10 10" rotation="0 0 0" material="transparent: true; opacity: 0.9" fog="false" alpha-test>
+</a-image>
+
+
+  <a-assets>
+<!--- Causes blank page when loading files but loading directly into page is actually faster --->
+  </a-assets>
+
+<a-entity id="testobject" rotation="0 -170 0">
+<!--- Start of cylinder and building rotation --->
+
+  <a-entity gltf-model="models/scene.gltf" id="building" position="-18.28 .030 20.74" scale="0.007 0.007 0.007" shadow="cast: true">
+  </a-entity>
+
+<a-cylinder position="1 0.1 0" radius="15" height=".4" color="#b8cfd7"></a-cylinder>
+<a-animation attribute="rotation" begin="startspin" end="stopspiner" dur="30000" fill="forwards" to="0 360 0" easing="linear" repeat="indefinite">
+</a-animation>
+
+<!--- people --->
+
+<a-image class="pickup" id="steve" position="0 1.15 -6.0" height="1.5" width="1.5" src="img/steve.png" look-at="#camera" alpha-test></a-image>
+<a-image class="pickup" id="emily" position="0.576 1.063 -8.733" height="1.5" width="1.5" src="img/emily.png" look-at="#camera" alpha-test></a-image>
+<a-image class="pickup" id="brian" position="2.033 1.091 -6.784" height="1.5" width="1.5" src="img/brian.png" look-at="#camera" alpha-test></a-image>
+<a-image class="pickup" id="luke" position="4.246 1.036 -6.203" height="1.5" width="1.5" src="img/luke.png" look-at="#camera" alpha-test></a-image>
+<a-image class="pickup" id="diane" position="4.335 1.072 -11.888" height="1.5" width="1.5" src="img/diane.png" look-at="#camera" alpha-test></a-image>
+<a-image class="pickup" id="joyce" position="3.02 1 -10.392" height="1.5" width="1.5" src="img/joyce.png" look-at="#camera" alpha-test></a-image>
+<a-image class="pickup" id="jana" position="-0.228 1.112 -13.379" height="1.5" width="1.5" src="img/jana.png" look-at="#camera" alpha-test></a-image>
+<!--- End of cylinder and building rotation --->
+</a-entity>
+
+<a-entity position="-1 -3.0 18" rotation="0 0 0">
+<!--- Button Start --->
+	<a-entity id="buttonstart">
+		<a-box color="#ffffff" width="2" height="0.4" depth="0.01" position="0 3.5 0" rotation="0 0 0" visible="true" material="opacity:0.7">
+				<a-text position="0 0.1 0.2" color="#000" align="center" value="START SNOW GLOBE" width="3.5"></a-text>
+		</a-box>
+	</a-entity>
+				
+	<a-entity id="buttonstop">
+		<a-box color="#ffffff" width="2" height="0.4" depth="0.01" position="2.5 3.5 0" rotation="0 0 0" visible="true" material="opacity:0.7">
+			<a-text position="0 0.04 0.1" color="#000" align="center" value="STOP SNOW GLOBE" width="3.5"></a-text>
+		</a-box>
+	</a-entity>
+</a-entity>
+
+<a-text position="0 3.6 -5"  color="#000" value="Cable Center Building\nGoes Here."></a-text>
+<a-sky color="#232f3c"></a-sky>
+    </a-scene>
+
+    <script>
+
+var resort = document.querySelector('#testobject');
+var startbuttons = document.querySelector('#buttonstart');
+var stopbutton = document.querySelector('#buttonstop');
+startbuttons.addEventListener('mouseenter', function () {resort.emit('startspin');});			
+stopbutton.addEventListener('mouseenter', function () {resort.emit('stopspiner');});  
+
+	</script>
+
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+<head>
+<script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+<style>
+.buttons {
+  position: absolute;
+  z-index: 1;
+}
+
+button {
+  margin: 1rem;
+}
+</style>
+
+
+<body>
+<div class="buttons">
+  <button class="position-selector" data-position="0.17 4.14 2.79">Position 1</button>
+  <button class="position-selector" data-position="3.48 3.57 0.15">Position 2</button>
+</div>
+<a-scene>
+  <a-entity id="camera" look-controls wasd-controls="fly: true"></a-entity>
+ <a-entity log="event: anEvent; message: Hello, Metaverse!"></a-entity>
+  <a-text id="infotxt" color="#000" align="center" value="1998" position="0 3 -4" width="8" scale="2 2 2" side="double" opacity="0.5"></a-text>
+
+  <a-entity id="target" position="0 0 -4" >
+    <a-box id="box" position="-1 0.5 1" rotation="0 45 0" color="#4CC3D9"></a-box>
+    <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E"></a-sphere>
+    <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D">
+    </a-cylinder>
+    <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+  </a-entity>
+  <a-sky color="#ECECEC"></a-sky>
+</a-scene>
+
+<script>
+document.querySelector("#target").addEventListener('click',function() {
+ document.getElementByID("infotxt").setAttribute("value", "test");
+      });
+</script>
+
+</body>
+</html>
